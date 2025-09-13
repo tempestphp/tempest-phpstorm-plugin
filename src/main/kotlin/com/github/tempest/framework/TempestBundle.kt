@@ -1,13 +1,13 @@
-package com.github.brendt.tempestphpstormplugin
+package com.github.tempest.framework
 
 import com.intellij.DynamicBundle
 import org.jetbrains.annotations.NonNls
 import org.jetbrains.annotations.PropertyKey
 
 @NonNls
-private const val BUNDLE = "messages.MyBundle"
+private const val BUNDLE = "messages.TempestBundle"
 
-object MyBundle : DynamicBundle(BUNDLE) {
+object TempestBundle : DynamicBundle(BUNDLE) {
 
     @JvmStatic
     fun message(@PropertyKey(resourceBundle = BUNDLE) key: String, vararg params: Any) =
