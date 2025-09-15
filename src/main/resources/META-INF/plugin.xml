@@ -5,9 +5,15 @@
     <vendor email="xepozz@list.ru" url="https://github.com/xepozz">Dmitrii Derepko (@xepozz)</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.jetbrains.php</depends>
 
     <resource-bundle>messages.TempestBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
+        <multiHostInjector
+                implementation="com.github.tempest.framework.views.PHPLanguageInjector"/>
+    </extensions>
+    <extensions defaultExtensionNs="com.jetbrains.php">
+        
     </extensions>
 </idea-plugin>
