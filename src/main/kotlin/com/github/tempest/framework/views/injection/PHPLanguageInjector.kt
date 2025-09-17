@@ -49,6 +49,10 @@ class PHPLanguageInjector : MultiHostInjector {
         }
     }
 
+    val tagsMap = mapOf(
+        "{!!" to "!!}",
+        "{{" to "}}",
+    )
     private fun injectIntoText(
         element: PsiLanguageInjectionHost,
         registrar: MultiHostRegistrar
@@ -58,8 +62,8 @@ class PHPLanguageInjector : MultiHostInjector {
             .apply { if (size < 2) return }
 
 //        println("children: $children")
-        val openTag = children.firstOrNull()?.psi ?: return
-        val closeTag = children.lastOrNull()?.psi
+        val openTag = children.find { it.text == "{!!" || it.text == "{{" }?.psi ?: return
+        val closeTag = children.find { it.text == tagsMap[openTag.text] }?.psi
 
 //        println("openTag: ${openTag.text}, closeTag: ${closeTag?.text}")
         if ((openTag.text == "{!!" && closeTag?.text == "!!}") || (openTag.text == "{{" && closeTag?.text == "}}")) {
