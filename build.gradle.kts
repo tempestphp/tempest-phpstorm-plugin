@@ -1,3 +1,4 @@
+import org.gradle.internal.classpath.Instrumented.systemProperty
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
@@ -26,6 +27,14 @@ repositories {
     // IntelliJ Platform Gradle Plugin Repositories Extension - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-repositories-extension.html
     intellijPlatform {
         defaultRepositories()
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            setSrcDirs(listOf("src/main/kotlin", "src/main/gen"))
+        }
     }
 }
 
@@ -138,6 +147,8 @@ tasks {
 
 intellijPlatformTesting {
     runIde {
+        systemProperty("idea.plugins.disabled", "org.jetbrains.plugins.vue")
+
         register("runIdeForUiTests") {
             task {
                 jvmArgumentProviders += CommandLineArgumentProvider {
