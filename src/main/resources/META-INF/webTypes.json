@@ -3,7 +3,6 @@
   "name": "Tempest",
   "version": "1.0.0",
   "description-markup": "markdown",
-  "framework": "Tempest",
   "default-icon": "icon",
   "contributions": {
     "html": {
