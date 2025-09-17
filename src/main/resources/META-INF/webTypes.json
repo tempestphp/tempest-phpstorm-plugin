@@ -6,6 +6,63 @@
   "default-icon": "icon",
   "contributions": {
     "html": {
+      "elements": [
+        {
+          "name": "x-base",
+          "description": "A base template you can install into your own project as a starting point. This one includes the Tailwind CDN for quick prototyping.",
+          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-base"
+        },
+        {
+          "name": "x-form",
+          "description": "This component provides a form element that will post by default and includes the csrf token out of the box.",
+          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-form"
+        },
+        {
+          "name": "x-input",
+          "description": "A versatile input component that will render labels and validation errors automatically.",
+          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-input"
+        },
+        {
+          "name": "x-submit",
+          "description": "A submit button component that prefills with a \"Submit\" label.",
+          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-submit"
+        },
+        {
+          "name": "x-csrf-token",
+          "description": "Includes the CSRF token in a form.",
+          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-csrf-token"
+        },
+        {
+          "name": "x-icon",
+          "description": "This component provides the ability to inject any icon from the Iconify project in your templates.",
+          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-icon"
+        },
+        {
+          "name": "x-vite-tags",
+          "description": "Tempest has built-in support for Vite, the most popular front-end development server and build tool. This component simply inject registered entrypoints where it is called.",
+          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-vite-tags"
+        },
+        {
+          "name": "x-template",
+          "description": "",
+          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-template"
+        },
+        {
+          "name": "x-slot",
+          "description": "",
+          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-slot"
+        },
+        {
+          "name": "x-markdown",
+          "description": "",
+          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-markdown"
+        },
+        {
+          "name": "x-component",
+          "description": "",
+          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-component"
+        }
+      ],
       "attributes": [
         {
           "name": ":if",
