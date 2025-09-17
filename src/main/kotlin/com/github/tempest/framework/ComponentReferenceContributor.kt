@@ -38,6 +38,7 @@ class ComponentReferenceContributor : PsiReferenceContributor() {
                         GlobalSearchScope.projectScope(project),
                         {
                             val psiFile = it.findPsiFile(project) ?: return@processFilesByName true
+//                            println("found file $it for ${element.name}")
                             result.add(
                                 object : PsiReferenceBase<PsiElement>(element, nameElement.textRange, false) {
                                     override fun resolve() = psiFile
