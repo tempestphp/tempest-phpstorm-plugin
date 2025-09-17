@@ -1,0 +1,62 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JetBrains/web-types/master/schema/web-types.json",
+  "name": "Tempest",
+  "version": "1.0.0",
+  "description-markup": "markdown",
+  "framework": "Tempest",
+  "default-icon": "icon",
+  "contributions": {
+    "html": {
+      "attributes": [
+        {
+          "name": ":if",
+          "description": "Conditional attribute `if`. The element is present in the final html when the condition is true.",
+          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#control-structures",
+          "inject-language": "InjectablePHP",
+          "value": {
+            "type": "string",
+            "required": true
+          }
+        },
+        {
+          "name": ":elseif",
+          "description": "Conditional attribute `else if`. The element is present in the final html when the condition is true.",
+          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#control-structures",
+          "inject-language": "InjectablePHP",
+          "value": {
+            "type": "string",
+            "required": true
+          }
+        },
+        {
+          "name": ":else",
+          "description": "Conditional attribute. The element is present in the final html otherwise.",
+          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#control-structures",
+          "inject-language": "InjectablePHP",
+          "value": {
+            "kind": "no-value"
+          }
+        },
+        {
+          "name": ":foreach",
+          "description": "Loop attribute `for each`. Values should be as PHP `foreach` loop. Introduce a local variable for each value in the collection.",
+          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#control-structures",
+          "inject-language": "InjectablePHP",
+          "value": {
+            "type": "string",
+            "required": true
+          }
+        },
+        {
+          "name": ":forelse",
+          "description": "Loop attribute combined with `foreach`. The element is present in the final html when the collection is empty.",
+          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#control-structures",
+          "inject-language": "InjectablePHP",
+          "value": {
+            "kind": "no-value"
+          }
+        }
+      ]
+    }
+  }
+}
