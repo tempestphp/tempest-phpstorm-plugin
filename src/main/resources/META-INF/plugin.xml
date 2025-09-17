@@ -11,7 +11,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <multiHostInjector
-                implementation="com.github.tempest.framework.views.PHPLanguageInjector"/>
+                implementation="com.github.tempest.framework.views.injection.PHPLanguageInjector"/>
         <webSymbols.webTypes
                 source="META-INF/webTypes.json"
                 enableByDefault="true"/>
