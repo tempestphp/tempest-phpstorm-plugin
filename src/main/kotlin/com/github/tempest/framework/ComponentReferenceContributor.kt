@@ -14,8 +14,6 @@ import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.xml.XmlChildRole
 import com.intellij.util.ProcessingContext
 
-private const val TEMPLATE_PREFIX = ".view.php"
-
 class ComponentReferenceContributor : PsiReferenceContributor() {
     override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
         registrar.registerReferenceProvider(
@@ -35,7 +33,7 @@ class ComponentReferenceContributor : PsiReferenceContributor() {
                     val result = mutableListOf<PsiReference>()
 
                     FilenameIndex.processFilesByName(
-                        element.name + TEMPLATE_PREFIX,
+                        element.name + TempestFrameworkUtil.TEMPLATE_PREFIX,
                         true,
                         GlobalSearchScope.projectScope(project),
                         {
