@@ -15,6 +15,7 @@
         <webSymbols.webTypes
                 source="META-INF/webTypes.json"
                 enableByDefault="true"/>
+        <psi.referenceContributor language="HTML" implementation="com.github.tempest.framework.ComponentReferenceContributor" />
         <spellchecker.bundledDictionaryProvider
                 implementation="com.github.tempest.framework.SpellcheckingDictionaryProvider"/>
     </extensions>
