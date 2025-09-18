@@ -2,45 +2,159 @@
   "$schema": "https://raw.githubusercontent.com/JetBrains/web-types/master/schema/web-types.json",
   "name": "Tempest Component",
   "version": "1.0.0",
-  "description-markup": "markdown",
+  "description-markup": "html",
   "default-icon": "icons/tempest/icon_transparent.svg",
   "contributions": {
     "html": {
       "elements": [
         {
           "name": "x-base",
-          "description": "A base template you can install into your own project as a starting point. This one includes the Tailwind CDN for quick prototyping.",
-          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-base"
+          "description": "<p>A base template you can install into your own project as a starting point. This one includes the <strong>Tailwind CDN</strong> for quick prototyping.</p><p><strong>Available named slots:</strong></p><ul><li><code>head</code></li><li><code>scripts</code></li></ul>",
+          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-base",
+          "attributes": [
+            {
+              "name": "title",
+              "description": "The webpage's title",
+              "value": {
+                "type": "string",
+                "required": false
+              }
+            }
+          ]
         },
         {
           "name": "x-form",
-          "description": "This component provides a form element that will post by default and includes the csrf token out of the box.",
-          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-form"
+          "description": "<p>This component provides a form element that will post by default and includes the csrf token out of the box.</p>",
+          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-form",
+          "attributes": [
+            {
+              "name": "action",
+              "description": "",
+              "value": {
+                "type": "string",
+                "required": false
+              }
+            },
+            {
+              "name": "method",
+              "description": "",
+              "value": {
+                "type": "string",
+                "required": false
+              }
+            },
+            {
+              "name": "enctype",
+              "description": "",
+              "value": {
+                "type": "string",
+                "required": false
+              }
+            }
+          ]
         },
         {
           "name": "x-input",
-          "description": "A versatile input component that will render labels and validation errors automatically.",
-          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-input"
+          "description": "<p>A versatile input component that will render labels and validation errors automatically.</p>",
+          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-input",
+          "attributes": [
+            {
+              "name": "name",
+              "description": "",
+              "value": {
+                "type": "string",
+                "required": true
+              }
+            },
+            {
+              "name": "label",
+              "description": "",
+              "value": {
+                "type": "string",
+                "required": false
+              }
+            },
+            {
+              "name": "id",
+              "description": "",
+              "value": {
+                "type": "string",
+                "required": false
+              }
+            },
+            {
+              "name": "type",
+              "description": "",
+              "value": {
+                "type": "string",
+                "required": false
+              }
+            },
+            {
+              "name": "default",
+              "description": "",
+              "value": {
+                "type": "string",
+                "required": false
+              }
+            }
+          ]
         },
         {
           "name": "x-submit",
-          "description": "A submit button component that prefills with a \"Submit\" label.",
+          "description": "<p>A submit button component that prefills with a \"Submit\" label.</p>",
           "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-submit"
         },
         {
           "name": "x-csrf-token",
-          "description": "Includes the CSRF token in a form.",
+          "description": "<p>Includes the CSRF token in a form.</p>",
           "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-csrf-token"
         },
         {
           "name": "x-icon",
-          "description": "This component provides the ability to inject any icon from the Iconify project in your templates.",
-          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-icon"
+          "description": "<p>This component provides the ability to inject any icon from the Iconify project in your templates.</p>",
+          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-icon",
+          "attributes": [
+            {
+              "name": "name",
+              "description": "",
+              "value": {
+                "type": "string",
+                "required": true
+              }
+            },
+            {
+              "name": "class",
+              "description": "",
+              "value": {
+                "type": "string",
+                "required": false
+              }
+            }
+          ]
         },
         {
           "name": "x-vite-tags",
-          "description": "Tempest has built-in support for Vite, the most popular front-end development server and build tool. This component simply inject registered entrypoints where it is called.",
-          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-vite-tags"
+          "description": "<p>Tempest has built-in support for Vite, the most popular front-end development server and build tool. This component simply inject registered entrypoints where it is called.</p>",
+          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-vite-tags",
+          "attributes": [
+            {
+              "name": "entrypoints",
+              "description": "",
+              "value": {
+                "type": "array",
+                "required": false
+              }
+            },
+            {
+              "name": "entrypoint",
+              "description": "",
+              "value": {
+                "type": "string",
+                "required": false
+              }
+            }
+          ]
         },
         {
           "name": "x-template",
@@ -50,23 +164,53 @@
         {
           "name": "x-slot",
           "description": "",
-          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-slot"
+          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-slot",
+          "attributes": [
+            {
+              "name": "name",
+              "description": "The name of the slot",
+              "value": {
+                "type": "string",
+                "required": false
+              }
+            }
+          ]
         },
         {
           "name": "x-markdown",
           "description": "",
-          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-markdown"
+          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-markdown",
+          "attributes": [
+            {
+              "name": "content",
+              "description": "The markdown content from a variable",
+              "value": {
+                "type": "string",
+                "required": false
+              }
+            }
+          ]
         },
         {
           "name": "x-component",
           "description": "",
-          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-component"
+          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-component",
+          "attributes": [
+            {
+              "name": "is",
+              "description": "",
+              "value": {
+                "type": "string",
+                "required": true
+              }
+            }
+          ]
         }
       ],
       "attributes": [
         {
           "name": ":if",
-          "description": "Conditional attribute `if`. The element is present in the final html when the condition is true.",
+          "description": "Conditional attribute <code>if</code>. The element is present in the final html when the condition is <strong>true</strong>.",
           "doc-url": "https://tempestphp.com/1.x/internals/view-spec#control-structures",
           "inject-language": "InjectablePHP",
           "value": {
@@ -76,7 +220,7 @@
         },
         {
           "name": ":elseif",
-          "description": "Conditional attribute `else if`. The element is present in the final html when the condition is true.",
+          "description": "Conditional attribute <code>else if</code>. The element is present in the final html when the condition is <strong>true</strong>.",
           "doc-url": "https://tempestphp.com/1.x/internals/view-spec#control-structures",
           "inject-language": "InjectablePHP",
           "value": {
@@ -95,7 +239,7 @@
         },
         {
           "name": ":foreach",
-          "description": "Loop attribute `for each`. Values should be as PHP `foreach` loop. Introduce a local variable for each value in the collection.",
+          "description": "Loop attribute <code>for each</code>. Values should be as PHP <code>foreach</code> loop. Introduce a local variable for each value in the collection.",
           "doc-url": "https://tempestphp.com/1.x/internals/view-spec#control-structures",
           "inject-language": "InjectablePHP",
           "value": {
@@ -105,7 +249,7 @@
         },
         {
           "name": ":forelse",
-          "description": "Loop attribute combined with `foreach`. The element is present in the final html when the collection is empty.",
+          "description": "Loop attribute combined with <code>foreach</code>. The element is present in the final html when the collection is empty.",
           "doc-url": "https://tempestphp.com/1.x/internals/view-spec#control-structures",
           "inject-language": "InjectablePHP",
           "value": {
