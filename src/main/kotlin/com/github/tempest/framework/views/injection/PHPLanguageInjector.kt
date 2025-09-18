@@ -16,8 +16,7 @@ import com.intellij.psi.xml.XmlToken
 
 class PHPLanguageInjector : MultiHostInjector {
     override fun getLanguagesToInject(
-        registrar: MultiHostRegistrar,
-        element: PsiElement
+        registrar: MultiHostRegistrar, element: PsiElement
     ) {
         when (element) {
             is XmlAttributeValue -> {
@@ -27,18 +26,14 @@ class PHPLanguageInjector : MultiHostInjector {
 
                 val injectableHost = element as? PsiLanguageInjectionHost ?: return
 
-                registrar
-                    .startInjecting(Language.findLanguageByID("PHP") ?: return)
-                    .addPlace("<?=", "?>", injectableHost, TextRange(0, injectableHost.textLength))
-                    .doneInjecting()
+                registrar.startInjecting(Language.findLanguageByID("PHP") ?: return)
+                    .addPlace("<?=", "?>", injectableHost, TextRange(0, injectableHost.textLength)).doneInjecting()
             }
 
             is HtmlTag -> {
-                element.children
-                    .mapNotNull { it as? HtmlRawTextImpl }
-                    .forEach { child->
-                        injectIntoText(HtmlTextInjectionHostWrapper(child), registrar)
-                    }
+                element.children.mapNotNull { it as? HtmlRawTextImpl }.forEach { child ->
+                    injectIntoText(HtmlTextInjectionHostWrapper(child), registrar)
+                }
             }
 
             is XmlText -> {
@@ -53,13 +48,11 @@ class PHPLanguageInjector : MultiHostInjector {
         "{!!" to "!!}",
         "{{" to "}}",
     )
+
     private fun injectIntoText(
-        element: PsiLanguageInjectionHost,
-        registrar: MultiHostRegistrar
+        element: PsiLanguageInjectionHost, registrar: MultiHostRegistrar
     ) {
-        val children = element.node.children().toList()
-            .filter { it is XmlToken }
-            .apply { if (size < 2) return }
+        val children = element.node.children().toList().filter { it is XmlToken }.apply { if (size < 2) return }
 
 //        println("children: $children")
         val openTag = children.find { it.text == "{!!" || it.text == "{{" }?.psi ?: return
@@ -71,9 +64,7 @@ class PHPLanguageInjector : MultiHostInjector {
 
             val textRange = TextRange(openTag.textRangeInParent.endOffset, closeTag.startOffsetInParent)
 //            println("injecting ${language} into $element, $textRange")
-            registrar.startInjecting(language)
-                .addPlace("<?=", "?>", element, textRange)
-                .doneInjecting()
+            registrar.startInjecting(language).addPlace("<?=", "?>", element, textRange).doneInjecting()
         }
     }
 
