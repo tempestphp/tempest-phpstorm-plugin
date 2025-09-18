@@ -1,9 +1,9 @@
 {
   "$schema": "https://raw.githubusercontent.com/JetBrains/web-types/master/schema/web-types.json",
-  "name": "Tempest",
+  "name": "Tempest Component",
   "version": "1.0.0",
   "description-markup": "markdown",
-  "default-icon": "icon",
+  "default-icon": "icons/tempest/icon_transparent.svg",
   "contributions": {
     "html": {
       "elements": [
