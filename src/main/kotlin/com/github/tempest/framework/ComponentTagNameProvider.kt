@@ -13,7 +13,7 @@ class ComponentTagNameProvider : XmlTagNameProvider {
     ) {
         val project = tag.project
 
-        val result = mutableListOf<String>()
+        val result = mutableSetOf<String>()
         FilenameIndex.processAllFileNames(
             {
                 if (it.startsWith("x-") && it.endsWith(TempestFrameworkUtil.TEMPLATE_PREFIX)) {
@@ -29,8 +29,9 @@ class ComponentTagNameProvider : XmlTagNameProvider {
             null,
         )
 
-        result.distinct().map {
-            LookupElementBuilder.create(it).withIcon(TempestIcons.TEMPEST).withTypeText("Tempest Component")
-        }.apply { elements.addAll(this) }
+        elements.addAll(
+            result.map {
+                LookupElementBuilder.create(it).withIcon(TempestIcons.TEMPEST).withTypeText("Tempest Component")
+            })
     }
 }
