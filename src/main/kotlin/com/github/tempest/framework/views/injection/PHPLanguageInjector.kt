@@ -15,10 +15,7 @@ import com.intellij.psi.xml.XmlText
 import com.intellij.psi.xml.XmlToken
 
 class PHPLanguageInjector : MultiHostInjector {
-    override fun getLanguagesToInject(
-        registrar: MultiHostRegistrar,
-        element: PsiElement
-    ) {
+    override fun getLanguagesToInject(registrar: MultiHostRegistrar, element: PsiElement) {
         when (element) {
             is XmlAttributeValue -> {
                 val attribute = element.parent as? XmlAttribute ?: return
@@ -36,50 +33,52 @@ class PHPLanguageInjector : MultiHostInjector {
             is HtmlTag -> {
                 element.children
                     .mapNotNull { it as? HtmlRawTextImpl }
-                    .forEach { child->
+                    .forEach { child ->
                         injectIntoText(HtmlTextInjectionHostWrapper(child), registrar)
                     }
             }
 
             is XmlText -> {
-//                println("element: ${element.text}, ${element.javaClass.name} ${element is PsiLanguageInjectionHost}")
+                //                println("element: ${element.text}, ${element.javaClass.name}
+                // ${element is
+                // PsiLanguageInjectionHost}")
                 val injectableHost = element as? PsiLanguageInjectionHost ?: return
                 injectIntoText(injectableHost, registrar)
             }
         }
     }
 
-    val tagsMap = mapOf(
-        "{!!" to "!!}",
-        "{{" to "}}",
-    )
-    private fun injectIntoText(
-        element: PsiLanguageInjectionHost,
-        registrar: MultiHostRegistrar
-    ) {
-        val children = element.node.children().toList()
-            .filter { it is XmlToken }
-            .apply { if (size < 2) return }
+    val tagsMap = mapOf("{!!" to "!!}", "{{" to "}}")
 
-//        println("children: $children")
+    private fun injectIntoText(element: PsiLanguageInjectionHost, registrar: MultiHostRegistrar) {
+        val children =
+            element.node
+                .children()
+                .toList()
+                .filter { it is XmlToken }
+                .apply { if (size < 2) return }
+
+        //        println("children: $children")
         val openTag = children.find { it.text == "{!!" || it.text == "{{" }?.psi ?: return
         val closeTag = children.find { it.text == tagsMap[openTag.text] }?.psi
 
-//        println("openTag: ${openTag.text}, closeTag: ${closeTag?.text}")
-        if ((openTag.text == "{!!" && closeTag?.text == "!!}") || (openTag.text == "{{" && closeTag?.text == "}}")) {
+        //        println("openTag: ${openTag.text}, closeTag: ${closeTag?.text}")
+        if (
+            (openTag.text == "{!!" && closeTag?.text == "!!}") ||
+                (openTag.text == "{{" && closeTag?.text == "}}")
+        ) {
             val language = Language.findLanguageByID("PHP") ?: return
 
-            val textRange = TextRange(openTag.textRangeInParent.endOffset, closeTag.startOffsetInParent)
-//            println("injecting ${language} into $element, $textRange")
-            registrar.startInjecting(language)
+            val textRange =
+                TextRange(openTag.textRangeInParent.endOffset, closeTag.startOffsetInParent)
+            //            println("injecting ${language} into $element, $textRange")
+            registrar
+                .startInjecting(language)
                 .addPlace("<?=", "?>", element, textRange)
                 .doneInjecting()
         }
     }
 
-    override fun elementsToInjectIn() = listOf(
-        XmlAttributeValue::class.java,
-        XmlText::class.java,
-        HtmlTag::class.java,
-    )
+    override fun elementsToInjectIn() =
+        listOf(XmlAttributeValue::class.java, XmlText::class.java, HtmlTag::class.java)
 }

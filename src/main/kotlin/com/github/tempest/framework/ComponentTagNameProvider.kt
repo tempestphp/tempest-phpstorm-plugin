@@ -11,15 +11,18 @@ class ComponentTagNameProvider : XmlTagNameProvider {
     override fun addTagNameVariants(
         elements: MutableList<LookupElement>,
         tag: XmlTag,
-        prefix: String?
+        prefix: String?,
     ) {
         val project = tag.project
 
-        val result = mutableListOf<String>()
+        val result = mutableSetOf<String>()
         FilenameIndex.processAllFileNames(
             {
                 if (it.startsWith("x-") && it.endsWith(TempestFrameworkUtil.TEMPLATE_PREFIX)) {
-                    result.add(it.removeSuffix(TempestFrameworkUtil.TEMPLATE_PREFIX))
+                    val name = it.removeSuffix(TempestFrameworkUtil.TEMPLATE_PREFIX)
+                    if (!TempestFrameworkUtil.isBuiltInComponent(name)) {
+                        result.add(name)
+                    }
                 }
 
                 true
@@ -28,13 +31,12 @@ class ComponentTagNameProvider : XmlTagNameProvider {
             null,
         )
 
-        result
-            .distinct()
-            .map {
+        elements.addAll(
+            result.map {
                 LookupElementBuilder.create(it)
                     .withIcon(TempestIcons.TEMPEST)
                     .withTypeText("Tempest Component")
             }
-            .apply { elements.addAll(this) }
+        )
     }
 }

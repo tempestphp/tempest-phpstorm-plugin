@@ -8,7 +8,8 @@ import com.intellij.psi.PsiLanguageInjectionHost
 import com.intellij.psi.impl.source.html.HtmlRawTextImpl
 import com.intellij.psi.impl.source.xml.XmlTextImpl
 
-abstract class InjectionHostWrapper(node: ASTNode) : ASTWrapperPsiElement(node), PsiLanguageInjectionHost {
+abstract class InjectionHostWrapper(node: ASTNode) :
+    ASTWrapperPsiElement(node), PsiLanguageInjectionHost {
     override fun isValidHost(): Boolean = true
 
     override fun updateText(text: String): PsiLanguageInjectionHost {
@@ -17,10 +18,12 @@ abstract class InjectionHostWrapper(node: ASTNode) : ASTWrapperPsiElement(node),
     }
 }
 
-class XmlTextInjectionHostWrapper(val myElement: XmlTextImpl) : InjectionHostWrapper(myElement.node) {
+class XmlTextInjectionHostWrapper(val myElement: XmlTextImpl) :
+    InjectionHostWrapper(myElement.node) {
     override fun createLiteralTextEscaper() = myElement.createLiteralTextEscaper()
 }
 
-class HtmlTextInjectionHostWrapper(val myElement: HtmlRawTextImpl) : InjectionHostWrapper(myElement.node) {
+class HtmlTextInjectionHostWrapper(val myElement: HtmlRawTextImpl) :
+    InjectionHostWrapper(myElement.node) {
     override fun createLiteralTextEscaper() = LiteralTextEscaper.createSimple(this, false)
 }

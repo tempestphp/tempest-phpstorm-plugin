@@ -15,11 +15,10 @@
         <polySymbols.webTypes
                 source="META-INF/webTypes.json"
                 enableByDefault="true"/>
+        <gotoDeclarationHandler
+                implementation="com.github.tempest.framework.ComponentGotoDeclarationHandler"/>
         <xml.tagNameProvider
                 implementation="com.github.tempest.framework.ComponentTagNameProvider"/>
-        <psi.referenceContributor
-                language="HTML"
-                implementation="com.github.tempest.framework.ComponentReferenceContributor"/>
         <spellchecker.bundledDictionaryProvider
                 implementation="com.github.tempest.framework.SpellcheckingDictionaryProvider"/>
     </extensions>
