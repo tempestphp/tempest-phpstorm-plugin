@@ -12,6 +12,31 @@
           "pattern": {
             "regex": "x-.+"
           },
+          "attributes": [
+            {
+              "name": "Component Attribute Expression",
+              "pattern": {
+                "regex": ":.+"
+              },
+              "inject-language": "InjectablePHP",
+              "value": {
+                "type": "string",
+                "required": false
+              },
+              "virtual": true
+            },
+            {
+              "name": "Component Attribute",
+              "pattern": {
+                "regex": ".+"
+              },
+              "value": {
+                "type": "string",
+                "required": false
+              },
+              "virtual": true
+            }
+          ],
           "doc-url": "https://tempestphp.com/1.x/internals/view-spec",
           "virtual": true
         },
@@ -20,6 +45,15 @@
           "description": "<p>A base template you can install into your own project as a starting point. This one includes the <strong>Tailwind CDN</strong> for quick prototyping.</p><p><strong>Available named slots:</strong></p><ul><li><code>head</code></li><li><code>scripts</code></li></ul>",
           "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-base",
           "attributes": [
+            {
+              "name": ":title",
+              "description": "The webpage's title",
+              "inject-language": "InjectablePHP",
+              "value": {
+                "type": "string",
+                "required": false
+              }
+            },
             {
               "name": "title",
               "description": "The webpage's title",
@@ -36,6 +70,15 @@
           "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-form",
           "attributes": [
             {
+              "name": ":action",
+              "description": "",
+              "inject-language": "InjectablePHP",
+              "value": {
+                "type": "string",
+                "required": false
+              }
+            },
+            {
               "name": "action",
               "description": "",
               "value": {
@@ -44,8 +87,26 @@
               }
             },
             {
+              "name": ":method",
+              "description": "",
+              "inject-language": "InjectablePHP",
+              "value": {
+                "type": "string",
+                "required": false
+              }
+            },
+            {
               "name": "method",
               "description": "",
+              "value": {
+                "type": "string",
+                "required": false
+              }
+            },
+            {
+              "name": ":enctype",
+              "description": "",
+              "inject-language": "InjectablePHP",
               "value": {
                 "type": "string",
                 "required": false
@@ -67,6 +128,15 @@
           "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-input",
           "attributes": [
             {
+              "name": ":name",
+              "description": "",
+              "inject-language": "InjectablePHP",
+              "value": {
+                "type": "string",
+                "required": true
+              }
+            },
+            {
               "name": "name",
               "description": "",
               "value": {
@@ -75,8 +145,26 @@
               }
             },
             {
+              "name": ":label",
+              "description": "",
+              "inject-language": "InjectablePHP",
+              "value": {
+                "type": "string",
+                "required": false
+              }
+            },
+            {
               "name": "label",
               "description": "",
+              "value": {
+                "type": "string",
+                "required": false
+              }
+            },
+            {
+              "name": ":id",
+              "description": "",
+              "inject-language": "InjectablePHP",
               "value": {
                 "type": "string",
                 "required": false
@@ -91,8 +179,26 @@
               }
             },
             {
+              "name": ":type",
+              "description": "",
+              "inject-language": "InjectablePHP",
+              "value": {
+                "type": "string",
+                "required": false
+              }
+            },
+            {
               "name": "type",
               "description": "",
+              "value": {
+                "type": "string",
+                "required": false
+              }
+            },
+            {
+              "name": ":default",
+              "description": "",
+              "inject-language": "InjectablePHP",
               "value": {
                 "type": "string",
                 "required": false
@@ -124,11 +230,29 @@
           "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-icon",
           "attributes": [
             {
+              "name": ":name",
+              "description": "",
+              "inject-language": "InjectablePHP",
+              "value": {
+                "type": "string",
+                "required": true
+              }
+            },
+            {
               "name": "name",
               "description": "",
               "value": {
                 "type": "string",
                 "required": true
+              }
+            },
+            {
+              "name": ":class",
+              "description": "",
+              "inject-language": "InjectablePHP",
+              "value": {
+                "type": "string",
+                "required": false
               }
             },
             {
@@ -147,10 +271,28 @@
           "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-vite-tags",
           "attributes": [
             {
+              "name": ":entrypoints",
+              "description": "",
+              "inject-language": "InjectablePHP",
+              "value": {
+                "type": "array",
+                "required": false
+              }
+            },
+            {
               "name": "entrypoints",
               "description": "",
               "value": {
                 "type": "array",
+                "required": false
+              }
+            },
+            {
+              "name": ":entrypoint",
+              "description": "",
+              "inject-language": "InjectablePHP",
+              "value": {
+                "type": "string",
                 "required": false
               }
             },
@@ -175,6 +317,15 @@
           "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-slot",
           "attributes": [
             {
+              "name": ":name",
+              "description": "The name of the slot",
+              "inject-language": "InjectablePHP",
+              "value": {
+                "type": "string",
+                "required": false
+              }
+            },
+            {
               "name": "name",
               "description": "The name of the slot",
               "value": {
@@ -190,6 +341,15 @@
           "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-markdown",
           "attributes": [
             {
+              "name": ":content",
+              "description": "The markdown content from a variable",
+              "inject-language": "InjectablePHP",
+              "value": {
+                "type": "string",
+                "required": false
+              }
+            },
+            {
               "name": "content",
               "description": "The markdown content from a variable",
               "value": {
@@ -204,6 +364,15 @@
           "description": "",
           "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-component",
           "attributes": [
+            {
+              "name": ":is",
+              "description": "",
+              "inject-language": "InjectablePHP",
+              "value": {
+                "type": "string",
+                "required": true
+              }
+            },
             {
               "name": "is",
               "description": "",
