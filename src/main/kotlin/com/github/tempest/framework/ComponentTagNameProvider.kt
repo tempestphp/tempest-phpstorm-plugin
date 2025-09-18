@@ -9,7 +9,9 @@ import com.intellij.xml.XmlTagNameProvider
 
 class ComponentTagNameProvider : XmlTagNameProvider {
     override fun addTagNameVariants(
-        elements: MutableList<LookupElement>, tag: XmlTag, prefix: String?
+        elements: MutableList<LookupElement>,
+        tag: XmlTag,
+        prefix: String?,
     ) {
         val project = tag.project
 
@@ -31,7 +33,10 @@ class ComponentTagNameProvider : XmlTagNameProvider {
 
         elements.addAll(
             result.map {
-                LookupElementBuilder.create(it).withIcon(TempestIcons.TEMPEST).withTypeText("Tempest Component")
-            })
+                LookupElementBuilder.create(it)
+                    .withIcon(TempestIcons.TEMPEST)
+                    .withTypeText("Tempest Component")
+            }
+        )
     }
 }

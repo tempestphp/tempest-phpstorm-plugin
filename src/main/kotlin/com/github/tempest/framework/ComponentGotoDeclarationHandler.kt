@@ -13,7 +13,9 @@ import com.intellij.psi.util.PsiTreeUtil
 
 class ComponentGotoDeclarationHandler : GotoDeclarationHandler {
     override fun getGotoDeclarationTargets(
-        element: PsiElement?, offset: Int, editor: Editor?
+        element: PsiElement?,
+        offset: Int,
+        editor: Editor?,
     ): Array<PsiElement>? {
         if (element == null) return null
 
@@ -26,7 +28,9 @@ class ComponentGotoDeclarationHandler : GotoDeclarationHandler {
         val libraryFiles = mutableListOf<PsiFile>()
 
         FilenameIndex.processFilesByName(
-            tag.name + TempestFrameworkUtil.TEMPLATE_PREFIX, true, GlobalSearchScope.projectScope(project)
+            tag.name + TempestFrameworkUtil.TEMPLATE_PREFIX,
+            true,
+            GlobalSearchScope.projectScope(project),
         ) { virtualFile ->
             val psiFile = virtualFile.findPsiFile(project) ?: return@processFilesByName true
 
