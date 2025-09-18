@@ -8,6 +8,14 @@
     "html": {
       "elements": [
         {
+          "name": "Custom Tempest Component",
+          "pattern": {
+            "regex": "x-.+"
+          },
+          "doc-url": "https://tempestphp.com/1.x/internals/view-spec",
+          "virtual": true
+        },
+        {
           "name": "x-base",
           "description": "<p>A base template you can install into your own project as a starting point. This one includes the <strong>Tailwind CDN</strong> for quick prototyping.</p><p><strong>Available named slots:</strong></p><ul><li><code>head</code></li><li><code>scripts</code></li></ul>",
           "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-base",
