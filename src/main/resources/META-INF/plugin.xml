@@ -17,6 +17,8 @@
                 enableByDefault="true"/>
         <gotoDeclarationHandler
                 implementation="com.github.tempest.framework.ComponentGotoDeclarationHandler"/>
+        <xml.tagNameProvider
+                implementation="com.github.tempest.framework.ComponentTagNameProvider"/>
         <spellchecker.bundledDictionaryProvider
                 implementation="com.github.tempest.framework.SpellcheckingDictionaryProvider"/>
     </extensions>
