@@ -2,8 +2,10 @@ package com.github.tempest.framework
 
 import com.intellij.codeInsight.navigation.actions.GotoDeclarationHandler
 import com.intellij.openapi.editor.Editor
+import com.intellij.openapi.roots.ProjectFileIndex
 import com.intellij.openapi.vfs.findPsiFile
 import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiFile
 import com.intellij.psi.html.HtmlTag
 import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScope
@@ -19,18 +21,28 @@ class ComponentGotoDeclarationHandler : GotoDeclarationHandler {
         if (!tag.name.startsWith("x-")) return null
 
         val project = tag.project
-        val result = mutableListOf<PsiElement>()
+        val projectFileIndex = ProjectFileIndex.getInstance(project)
+        val projectFiles = mutableListOf<PsiFile>()
+        val libraryFiles = mutableListOf<PsiFile>()
 
         FilenameIndex.processFilesByName(
-            tag.name + TempestFrameworkUtil.TEMPLATE_PREFIX, true, GlobalSearchScope.projectScope(project), {
-                val psiFile = it.findPsiFile(project) ?: return@processFilesByName true
-                result.add(psiFile)
+            tag.name + TempestFrameworkUtil.TEMPLATE_PREFIX, true, GlobalSearchScope.projectScope(project)
+        ) { virtualFile ->
+            val psiFile = virtualFile.findPsiFile(project) ?: return@processFilesByName true
 
-                true
-            })
+            if (projectFileIndex.isInSourceContent(virtualFile)) {
+                projectFiles.add(psiFile)
+            } else {
+                libraryFiles.add(psiFile)
+            }
 
-        if (result.isEmpty()) return null
+            true
+        }
 
-        return result.toTypedArray()
+        return when {
+            projectFiles.isNotEmpty() -> projectFiles.toTypedArray()
+            libraryFiles.isNotEmpty() -> libraryFiles.toTypedArray()
+            else -> null
+        }
     }
 }
