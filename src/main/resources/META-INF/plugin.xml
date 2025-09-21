@@ -22,6 +22,9 @@
                 implementation="com.github.tempest.framework.views.references.ComponentReferenceContributor"/>
         <spellchecker.bundledDictionaryProvider
                 implementation="com.github.tempest.framework.SpellcheckingDictionaryProvider"/>
+        <lang.inspectionSuppressor
+                language="HTML"
+                implementationClass="com.github.tempest.framework.views.TempestComponentsInspectionSuppressor"/>
     </extensions>
     <extensions defaultExtensionNs="com.jetbrains.php">
 
