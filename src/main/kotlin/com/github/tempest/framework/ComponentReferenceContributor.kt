@@ -27,6 +27,7 @@ class ComponentReferenceContributor : PsiReferenceContributor() {
                     if (!element.name.startsWith("x-")) return emptyArray()
 
                     val nameElement = XmlChildRole.START_TAG_NAME_FINDER.findChild(element.node) ?: return emptyArray()
+                    val range = nameElement.textRange.shiftLeft(element.textRange.startOffset)
 
                     val project = element.project
 
@@ -38,9 +39,9 @@ class ComponentReferenceContributor : PsiReferenceContributor() {
                         GlobalSearchScope.projectScope(project),
                         {
                             val psiFile = it.findPsiFile(project) ?: return@processFilesByName true
-//                            println("found file $it for ${element.name}")
+//                            println("found file $it for ${element.name}, range ${range}")
                             result.add(
-                                object : PsiReferenceBase<PsiElement>(element, nameElement.textRange, false) {
+                                object : PsiReferenceBase<PsiElement>(element, range, false) {
                                     override fun resolve() = psiFile
                                 }
                             )
