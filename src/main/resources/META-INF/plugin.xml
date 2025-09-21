@@ -12,7 +12,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <multiHostInjector
                 implementation="com.github.tempest.framework.views.injection.PHPLanguageInjector"/>
-        <polySymbols.webTypes
+        <webSymbols.webTypes
                 source="META-INF/webTypes.json"
                 enableByDefault="true"/>
         <xml.tagNameProvider
