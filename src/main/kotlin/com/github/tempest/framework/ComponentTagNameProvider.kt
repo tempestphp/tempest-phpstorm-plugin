@@ -18,8 +18,8 @@ class ComponentTagNameProvider : XmlTagNameProvider {
         val result = mutableListOf<String>()
         FilenameIndex.processAllFileNames(
             {
-                if (it.startsWith("x-") && it.endsWith(TempestFrameworkUtil.TEMPLATE_PREFIX)) {
-                    result.add(it.removeSuffix(TempestFrameworkUtil.TEMPLATE_PREFIX))
+                if (it.startsWith("x-") && it.endsWith(TempestFrameworkUtil.TEMPLATE_SUFFIX)) {
+                    result.add(it.removeSuffix(TempestFrameworkUtil.TEMPLATE_SUFFIX))
                 }
 
                 true

@@ -3,7 +3,6 @@ package com.github.tempest.framework.views.references
 import com.github.tempest.framework.php.getPhpViewVariables
 import com.intellij.codeInsight.completion.InsertionContext
 import com.intellij.codeInsight.completion.XmlAttributeInsertHandler
-import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiPolyVariantReferenceBase
 import com.intellij.psi.ResolveResult
 import com.intellij.psi.html.HtmlTag
@@ -12,7 +11,7 @@ import com.jetbrains.php.completion.PhpLookupElement
 import com.jetbrains.php.lang.psi.PhpFile
 
 class TempestAttributeReference(element: XmlAttribute, private val htmlTag: HtmlTag) :
-    PsiPolyVariantReferenceBase<PsiElement>(element, element.nameElement.textRangeInParent, false) {
+    PsiPolyVariantReferenceBase<XmlAttribute>(element, element.nameElement.textRangeInParent) {
     override fun getVariants(): Array<out Any> {
         val fileReferences = htmlTag.references.filter { it is Immediate<*> }
 
@@ -41,4 +40,6 @@ class TempestAttributeReference(element: XmlAttribute, private val htmlTag: Html
 
         return emptyArray()
     }
+
+    override fun isSoft() = !element.name.startsWith(":")
 }

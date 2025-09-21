@@ -37,7 +37,7 @@ class ComponentReferenceContributor : PsiReferenceContributor() {
                     val result = mutableListOf<PsiReference>()
 
                     FilenameIndex.processFilesByName(
-                        element.name + TempestFrameworkUtil.TEMPLATE_PREFIX,
+                        element.name + TempestFrameworkUtil.TEMPLATE_SUFFIX,
                         true,
                         GlobalSearchScope.projectScope(project),
                         {
