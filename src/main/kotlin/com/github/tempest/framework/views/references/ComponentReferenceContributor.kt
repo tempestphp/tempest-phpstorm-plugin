@@ -27,7 +27,7 @@ class ComponentReferenceContributor : PsiReferenceContributor() {
                     context: ProcessingContext
                 ): Array<out PsiReference> {
                     if (element !is HtmlTag) return emptyArray()
-                    if (!element.name.startsWith("x-")) return emptyArray()
+                    if (!element.name.startsWith(TempestFrameworkUtil.COMPONENT_NAME_PREFIX)) return emptyArray()
 
                     val nameElement = XmlChildRole.START_TAG_NAME_FINDER.findChild(element.node) ?: return emptyArray()
                     val range = nameElement.textRange.shiftLeft(element.textRange.startOffset)
@@ -35,9 +35,11 @@ class ComponentReferenceContributor : PsiReferenceContributor() {
                     val project = element.project
 
                     val result = mutableListOf<PsiReference>()
+                    val filename = element.name + TempestFrameworkUtil.TEMPLATE_SUFFIX
+//                    println("looking for $filename")
 
                     FilenameIndex.processFilesByName(
-                        element.name + TempestFrameworkUtil.TEMPLATE_SUFFIX,
+                        filename,
                         true,
                         GlobalSearchScope.projectScope(project),
                         {
