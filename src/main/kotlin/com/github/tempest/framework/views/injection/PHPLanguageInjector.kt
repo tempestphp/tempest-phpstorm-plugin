@@ -28,7 +28,7 @@ class PHPLanguageInjector : MultiHostInjector {
             is XmlAttributeValue -> {
                 val attribute = element.parent as? XmlAttribute ?: return
 
-                if (!attribute.name.startsWith(':') || attribute.name.startsWith("::")) return
+                if (!attribute.name.startsWith(':')) return
 
                 val injectableHost = element as? PsiLanguageInjectionHost ?: return
 
