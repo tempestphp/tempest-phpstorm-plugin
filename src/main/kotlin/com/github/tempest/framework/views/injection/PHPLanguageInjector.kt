@@ -1,6 +1,5 @@
 package com.github.tempest.framework.views.injection
 
-import com.intellij.lang.Language
 import com.intellij.lang.injection.MultiHostInjector
 import com.intellij.lang.injection.MultiHostRegistrar
 import com.intellij.lang.tree.util.children
@@ -13,6 +12,7 @@ import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlAttributeValue
 import com.intellij.psi.xml.XmlText
 import com.intellij.psi.xml.XmlToken
+import com.jetbrains.php.lang.PhpLanguage
 
 class PHPLanguageInjector : MultiHostInjector {
     override fun getLanguagesToInject(
@@ -28,7 +28,7 @@ class PHPLanguageInjector : MultiHostInjector {
                 val injectableHost = element as? PsiLanguageInjectionHost ?: return
 
                 registrar
-                    .startInjecting(Language.findLanguageByID("PHP") ?: return)
+                    .startInjecting(PhpLanguage.INSTANCE ?: return)
                     .addPlace("<?=", "?>", injectableHost, TextRange(0, injectableHost.textLength))
                     .doneInjecting()
             }
@@ -67,11 +67,9 @@ class PHPLanguageInjector : MultiHostInjector {
 
 //        println("openTag: ${openTag.text}, closeTag: ${closeTag?.text}")
         if ((openTag.text == "{!!" && closeTag?.text == "!!}") || (openTag.text == "{{" && closeTag?.text == "}}")) {
-            val language = Language.findLanguageByID("PHP") ?: return
-
             val textRange = TextRange(openTag.textRangeInParent.endOffset, closeTag.startOffsetInParent)
 //            println("injecting ${language} into $element, $textRange")
-            registrar.startInjecting(language)
+            registrar.startInjecting(PhpLanguage.INSTANCE)
                 .addPlace("<?=", "?>", element, textRange)
                 .doneInjecting()
         }
