@@ -1,7 +1,8 @@
-package com.github.tempest.framework.router
+package com.github.tempest.framework.console.index
 
 import com.github.tempest.framework.TempestFrameworkClasses
 import com.github.tempest.framework.TempestFrameworkUtil
+import com.github.tempest.framework.common.index.AbstractIndex
 import com.intellij.openapi.util.text.StringUtil
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.util.indexing.DataIndexer
@@ -12,11 +13,11 @@ import com.intellij.util.io.EnumeratorStringDescriptor
 import com.jetbrains.php.lang.PhpFileType
 import com.jetbrains.php.lang.psi.elements.PhpAttribute
 
-private typealias RouteType = String
+private typealias ConsoleCommandsIndexType = String
 
-class RoutesIndex : AbstractIndex<RouteType>() {
+class ConsoleCommandsIndex : AbstractIndex<ConsoleCommandsIndexType>() {
     companion object {
-        val key = ID.create<String, RouteType>("Tempest.Routes")
+        val key = ID.create<String, ConsoleCommandsIndexType>("Tempest.ConsoleCommands")
     }
 
     override fun getVersion() = 1
@@ -30,7 +31,7 @@ class RoutesIndex : AbstractIndex<RouteType>() {
                 !it.name.endsWith(TempestFrameworkUtil.TEMPLATE_SUFFIX)
     }
 
-    override fun getIndexer() = DataIndexer<String, RouteType, FileContent> { inputData ->
+    override fun getIndexer() = DataIndexer<String, ConsoleCommandsIndexType, FileContent> { inputData ->
         inputData
             .psiFile
             .let { PsiTreeUtil.findChildrenOfType(it, PhpAttribute::class.java) }

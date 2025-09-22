@@ -1,4 +1,4 @@
-package com.github.tempest.framework.router
+package com.github.tempest.framework.common.index
 
 import com.intellij.util.indexing.DataIndexer
 import com.intellij.util.indexing.FileBasedIndex
