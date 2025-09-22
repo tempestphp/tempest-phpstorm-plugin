@@ -26,6 +26,9 @@
         <lang.inspectionSuppressor
                 language="HTML"
                 implementationClass="com.github.tempest.framework.views.TempestComponentsInspectionSuppressor"/>
+
+        <fileBasedIndex
+                implementation="com.github.tempest.framework.router.RoutesIndex" />
     </extensions>
     <extensions defaultExtensionNs="com.jetbrains.php">
 
