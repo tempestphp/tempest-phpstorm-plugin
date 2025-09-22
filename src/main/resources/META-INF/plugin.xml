@@ -18,6 +18,7 @@
         <xml.tagNameProvider
                 implementation="com.github.tempest.framework.ComponentTagNameProvider"/>
         <psi.referenceContributor
+                order="first"
                 language="HTML"
                 implementation="com.github.tempest.framework.views.references.ComponentReferenceContributor"/>
         <spellchecker.bundledDictionaryProvider
