@@ -15,6 +15,11 @@ import com.intellij.psi.xml.XmlToken
 import com.jetbrains.php.lang.PhpLanguage
 
 class PHPLanguageInjector : MultiHostInjector {
+    val tagsMap = mapOf(
+        "{!!" to "!!}",
+        "{{" to "}}",
+    )
+
     override fun getLanguagesToInject(
         registrar: MultiHostRegistrar,
         element: PsiElement
@@ -36,7 +41,7 @@ class PHPLanguageInjector : MultiHostInjector {
             is HtmlTag -> {
                 element.children
                     .mapNotNull { it as? HtmlRawTextImpl }
-                    .forEach { child->
+                    .forEach { child ->
                         injectIntoText(HtmlTextInjectionHostWrapper(child), registrar)
                     }
             }
@@ -49,10 +54,6 @@ class PHPLanguageInjector : MultiHostInjector {
         }
     }
 
-    val tagsMap = mapOf(
-        "{!!" to "!!}",
-        "{{" to "}}",
-    )
     private fun injectIntoText(
         element: PsiLanguageInjectionHost,
         registrar: MultiHostRegistrar
@@ -62,17 +63,15 @@ class PHPLanguageInjector : MultiHostInjector {
             .apply { if (size < 2) return }
 
 //        println("children: $children")
-        val openTag = children.find { it.text == "{!!" || it.text == "{{" }?.psi ?: return
-        val closeTag = children.find { it.text == tagsMap[openTag.text] }?.psi
+        val openTag = children.find { tagsMap.containsKey(it.text) }?.psi ?: return
+        val closeTag = children.find { it.text == tagsMap[openTag.text] }?.psi ?: return
 
 //        println("openTag: ${openTag.text}, closeTag: ${closeTag?.text}")
-        if ((openTag.text == "{!!" && closeTag?.text == "!!}") || (openTag.text == "{{" && closeTag?.text == "}}")) {
-            val textRange = TextRange(openTag.textRangeInParent.endOffset, closeTag.startOffsetInParent)
+        val textRange = TextRange(openTag.textRangeInParent.endOffset, closeTag.startOffsetInParent)
 //            println("injecting ${language} into $element, $textRange")
-            registrar.startInjecting(PhpLanguage.INSTANCE)
-                .addPlace("<?=", "?>", element, textRange)
-                .doneInjecting()
-        }
+        registrar.startInjecting(PhpLanguage.INSTANCE)
+            .addPlace("<?=", "?>", element, textRange)
+            .doneInjecting()
     }
 
     override fun elementsToInjectIn() = listOf(
