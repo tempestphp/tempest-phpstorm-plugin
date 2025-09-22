@@ -8,11 +8,6 @@
     "html": {
       "elements": [
         {
-          "name": "x-base",
-          "description": "A base template you can install into your own project as a starting point. This one includes the Tailwind CDN for quick prototyping.",
-          "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-base"
-        },
-        {
           "name": "x-form",
           "description": "This component provides a form element that will post by default and includes the csrf token out of the box.",
           "doc-url": "https://tempestphp.com/1.x/internals/view-spec#x-form"
