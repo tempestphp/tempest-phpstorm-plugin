@@ -29,6 +29,10 @@
 
         <fileBasedIndex
                 implementation="com.github.tempest.framework.console.index.ConsoleCommandsIndex" />
+        <fileBasedIndex
+                implementation="com.github.tempest.framework.router.index.RouterMethodsIndex" />
+        <fileBasedIndex
+                implementation="com.github.tempest.framework.router.index.RouterActionsIndex" />
     </extensions>
     <extensions defaultExtensionNs="com.jetbrains.php">
 
