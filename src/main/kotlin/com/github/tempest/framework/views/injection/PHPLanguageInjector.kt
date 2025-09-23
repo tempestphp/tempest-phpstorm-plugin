@@ -1,6 +1,5 @@
 package com.github.tempest.framework.views.injection
 
-import com.intellij.lang.Language
 import com.intellij.lang.injection.MultiHostInjector
 import com.intellij.lang.injection.MultiHostRegistrar
 import com.intellij.lang.tree.util.children
@@ -13,8 +12,14 @@ import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlAttributeValue
 import com.intellij.psi.xml.XmlText
 import com.intellij.psi.xml.XmlToken
+import com.jetbrains.php.lang.PhpLanguage
 
 class PHPLanguageInjector : MultiHostInjector {
+    val tagsMap = mapOf(
+        "{!!" to "!!}",
+        "{{" to "}}",
+    )
+
     override fun getLanguagesToInject(
         registrar: MultiHostRegistrar,
         element: PsiElement
@@ -23,12 +28,12 @@ class PHPLanguageInjector : MultiHostInjector {
             is XmlAttributeValue -> {
                 val attribute = element.parent as? XmlAttribute ?: return
 
-                if (!attribute.name.startsWith(':') || attribute.name.startsWith("::")) return
+                if (!attribute.name.startsWith(':')) return
 
                 val injectableHost = element as? PsiLanguageInjectionHost ?: return
 
                 registrar
-                    .startInjecting(Language.findLanguageByID("PHP") ?: return)
+                    .startInjecting(PhpLanguage.INSTANCE ?: return)
                     .addPlace("<?=", "?>", injectableHost, TextRange(0, injectableHost.textLength))
                     .doneInjecting()
             }
@@ -36,7 +41,7 @@ class PHPLanguageInjector : MultiHostInjector {
             is HtmlTag -> {
                 element.children
                     .mapNotNull { it as? HtmlRawTextImpl }
-                    .forEach { child->
+                    .forEach { child ->
                         injectIntoText(HtmlTextInjectionHostWrapper(child), registrar)
                     }
             }
@@ -49,10 +54,6 @@ class PHPLanguageInjector : MultiHostInjector {
         }
     }
 
-    val tagsMap = mapOf(
-        "{!!" to "!!}",
-        "{{" to "}}",
-    )
     private fun injectIntoText(
         element: PsiLanguageInjectionHost,
         registrar: MultiHostRegistrar
@@ -62,19 +63,15 @@ class PHPLanguageInjector : MultiHostInjector {
             .apply { if (size < 2) return }
 
 //        println("children: $children")
-        val openTag = children.find { it.text == "{!!" || it.text == "{{" }?.psi ?: return
-        val closeTag = children.find { it.text == tagsMap[openTag.text] }?.psi
+        val openTag = children.find { tagsMap.containsKey(it.text) }?.psi ?: return
+        val closeTag = children.find { it.text == tagsMap[openTag.text] }?.psi ?: return
 
 //        println("openTag: ${openTag.text}, closeTag: ${closeTag?.text}")
-        if ((openTag.text == "{!!" && closeTag?.text == "!!}") || (openTag.text == "{{" && closeTag?.text == "}}")) {
-            val language = Language.findLanguageByID("PHP") ?: return
-
-            val textRange = TextRange(openTag.textRangeInParent.endOffset, closeTag.startOffsetInParent)
+        val textRange = TextRange(openTag.textRangeInParent.endOffset, closeTag.startOffsetInParent)
 //            println("injecting ${language} into $element, $textRange")
-            registrar.startInjecting(language)
-                .addPlace("<?=", "?>", element, textRange)
-                .doneInjecting()
-        }
+        registrar.startInjecting(PhpLanguage.INSTANCE)
+            .addPlace("<?=", "?>", element, textRange)
+            .doneInjecting()
     }
 
     override fun elementsToInjectIn() = listOf(
