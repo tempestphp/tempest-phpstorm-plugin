@@ -10,6 +10,11 @@
     <resource-bundle>messages.TempestBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
+        <configurationType
+                implementation="com.github.tempest.framework.console.run.TempestConsoleCommandRunConfigurationType"/>
+        <runLineMarkerContributor
+                language="PHP"
+                implementationClass="com.github.tempest.framework.console.run.ConsoleCommandLineMarkerProvider" />
         <multiHostInjector
                 implementation="com.github.tempest.framework.views.injection.PHPLanguageInjector"/>
         <webSymbols.webTypes
@@ -35,6 +40,5 @@
                 implementation="com.github.tempest.framework.router.index.RouterActionsIndex" />
     </extensions>
     <extensions defaultExtensionNs="com.jetbrains.php">
-
     </extensions>
 </idea-plugin>
