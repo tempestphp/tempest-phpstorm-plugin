@@ -13,7 +13,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.impl.SimpleDataContext
 import com.jetbrains.php.lang.psi.elements.Method
 
-internal class TempestRunTargetAction(private val target: Method) : AnAction() {
+class TempestRunTargetAction(private val target: Method) : AnAction() {
     init {
         templatePresentation.setText(TempestBundle.message("action.run.target.text", target.name), false)
         templatePresentation.description = TempestBundle.message("action.run.target.description", target.name)
