@@ -15,6 +15,8 @@
         <runLineMarkerContributor
                 language="PHP"
                 implementationClass="com.github.tempest.framework.console.run.ConsoleCommandLineMarkerProvider" />
+        <runConfigurationProducer
+                implementation="com.github.tempest.framework.console.run.TempestRunConfigurationProducer" />
         <runAnything.executionProvider
                 implementation="com.github.tempest.framework.console.run.TempestRunAnythingProvider" />
         <multiHostInjector

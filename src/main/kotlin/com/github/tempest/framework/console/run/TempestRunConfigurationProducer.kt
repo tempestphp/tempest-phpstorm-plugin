@@ -1,5 +1,6 @@
 package com.github.tempest.framework.console.run
 
+import com.github.tempest.framework.TempestBundle
 import com.github.tempest.framework.php.getConsoleCommandName
 import com.intellij.execution.actions.ConfigurationContext
 import com.intellij.execution.actions.LazyRunConfigurationProducer
@@ -14,9 +15,10 @@ class TempestRunConfigurationProducer : LazyRunConfigurationProducer<TempestCons
         sourceElement: Ref<PsiElement>
     ): Boolean {
         val element = context.psiLocation as? Method ?: return false
+        val commandName = element.getConsoleCommandName() ?: return false
 
-        configuration.settings.commandName = element.getConsoleCommandName() ?: return false
-        configuration.name = "tempest ${configuration.settings.commandName}"
+        configuration.settings.commandName = commandName
+        configuration.name = TempestBundle.message("action.run.target.command", commandName)
 
         return true
     }
