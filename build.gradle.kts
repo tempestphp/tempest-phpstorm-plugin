@@ -33,7 +33,7 @@ repositories {
 sourceSets {
     main {
         java {
-            setSrcDirs(listOf("src/main/kotlin", "src/main/gen"))
+            setSrcDirs(listOf("src/main/kotlin"))
         }
     }
 }
