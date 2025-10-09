@@ -30,6 +30,9 @@
                 order="first"
                 language="HTML"
                 implementation="com.github.tempest.framework.views.references.ComponentReferenceContributor"/>
+        <psi.referenceContributor
+                language="PHP"
+                implementation="com.github.tempest.framework.router.references.RouteParametersReferenceContributor"/>
         <spellchecker.bundledDictionaryProvider
                 implementation="com.github.tempest.framework.SpellcheckingDictionaryProvider"/>
         <lang.inspectionSuppressor
