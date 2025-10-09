@@ -35,7 +35,7 @@ class RouteReference(
         val phpIndex = PhpIndexImpl.getInstance(project)
 
         return RouterIndexUtils
-            .getRoutes(myElement.contents, project)
+            .getRoutesByPattern(myElement.contents, project)
             .flatMap { phpIndex.getMethodsByFQN(it.action) }
             .let { PsiElementResolveResult.createResults(it) }
     }

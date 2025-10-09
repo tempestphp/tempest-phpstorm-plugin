@@ -8,11 +8,8 @@ class CompletionWeighter : CompletionWeigher() {
     override fun weigh(
         element: LookupElement,
         location: CompletionLocation
-    ): Comparable<*>? {
-        println("completion weigher: $element")
-        return when {
-            element is TopPriorityLookupElement -> 10
-            else -> null
-        }.apply { println("weigh: $this") }
+    ) = when {
+        element is TopPriorityLookupElement -> 1_000_000
+        else -> null
     }
 }
