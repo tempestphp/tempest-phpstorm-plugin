@@ -33,6 +33,9 @@
         <psi.referenceContributor
                 language="PHP"
                 implementation="com.github.tempest.framework.router.references.RouteParametersReferenceContributor"/>
+        <psi.referenceContributor
+                language="PHP"
+                implementation="com.github.tempest.framework.router.references.UriFunctionReferenceContributor"/>
         <spellchecker.bundledDictionaryProvider
                 implementation="com.github.tempest.framework.SpellcheckingDictionaryProvider"/>
         <lang.inspectionSuppressor
@@ -42,9 +45,7 @@
         <fileBasedIndex
                 implementation="com.github.tempest.framework.console.index.ConsoleCommandsIndex" />
         <fileBasedIndex
-                implementation="com.github.tempest.framework.router.index.RouterMethodsIndex" />
-        <fileBasedIndex
-                implementation="com.github.tempest.framework.router.index.RouterActionsIndex" />
+                implementation="com.github.tempest.framework.router.index.RoutesListIndex" />
     </extensions>
     <extensions defaultExtensionNs="com.jetbrains.php">
     </extensions>

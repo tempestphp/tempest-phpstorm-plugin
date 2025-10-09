@@ -1,8 +1,8 @@
 package com.github.tempest.framework.router.references
 
 import com.github.tempest.framework.TempestFrameworkClasses
-import com.github.tempest.framework.common.utils.StringUtils
 import com.github.tempest.framework.php.patterns.AttributeFqnCondition
+import com.github.tempest.framework.router.StringUtils
 import com.intellij.openapi.util.TextRange
 import com.intellij.patterns.PlatformPatterns
 import com.intellij.patterns.StandardPatterns
@@ -38,11 +38,12 @@ class RouteParametersReferenceContributor : PsiReferenceContributor() {
                     val parameters = method.parameters
                     if (parameters.isEmpty()) return emptyArray()
 
-                    return StringUtils.findTextBetweenParenthesis(element.text)
-                        .map { alias ->
+                    return StringUtils.findRouterParameters(element.text)
+                        .mapNotNull { alias ->
+                            val nameGroup = alias.groups[1] ?: return@mapNotNull null
                             val rangeInElement = TextRange(
-                                alias.range.first + 1,
-                                alias.range.last
+                                nameGroup.range.first,
+                                nameGroup.range.last+1
                             )
 
                             val parameter = method.getParameter(alias.groupValues[1])

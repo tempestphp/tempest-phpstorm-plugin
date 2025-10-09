@@ -2,6 +2,7 @@ package com.github.tempest.framework
 
 object TempestFrameworkClasses {
     const val ConsoleCommand = "\\Tempest\\Console\\ConsoleCommand"
+    const val FUNCTION_URI = "\\Tempest\\uri"
 
     const val ROUTER_GET = "\\Tempest\\Router\\Get"
     const val ROUTER_POST = "\\Tempest\\Router\\Post"
