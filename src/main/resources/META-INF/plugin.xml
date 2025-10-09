@@ -41,6 +41,13 @@
         <lang.inspectionSuppressor
                 language="HTML"
                 implementationClass="com.github.tempest.framework.views.TempestComponentsInspectionSuppressor"/>
+        <completion.contributor
+                language="PHP"
+                implementationClass="com.github.tempest.framework.router.completion.RouteParameterCompletionContributor"/>
+        <weigher
+                order="first"
+                implementationClass="com.github.tempest.framework.common.completion.CompletionWeighter"
+                key="completion" />
 
         <fileBasedIndex
                 implementation="com.github.tempest.framework.console.index.ConsoleCommandsIndex" />

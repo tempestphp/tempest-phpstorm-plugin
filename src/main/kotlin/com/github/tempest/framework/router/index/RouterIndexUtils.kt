@@ -14,7 +14,7 @@ object RouterIndexUtils {
             .filterNotNull()
     }
 
-    fun getRoute(pattern: String, project: Project): Collection<Route> {
+    fun getRoutes(pattern: String, project: Project): Collection<Route> {
         val fileBasedIndex = FileBasedIndex.getInstance()
 
         return fileBasedIndex
