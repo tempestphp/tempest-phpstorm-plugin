@@ -16,7 +16,7 @@ class RouteParameterReference(
     override fun resolve(): PsiElement? {
         val phpIndex = PhpIndex.getInstance(routeReferenceElement.project)
         return RouteResolveUtils
-            .resolve(routeReferenceElement)
+            .resolveCached(routeReferenceElement)
             .firstOrNull()
             ?.let { phpIndex.getMethodsByFQN(it.action) }
             ?.firstOrNull()
@@ -24,7 +24,7 @@ class RouteParameterReference(
     }
 
     override fun getVariants() = RouteResolveUtils
-        .resolve(routeReferenceElement)
+        .resolveCached(routeReferenceElement)
         .flatMap { RouteLookupElementBuilder.create(it) }
         .toTypedArray()
 

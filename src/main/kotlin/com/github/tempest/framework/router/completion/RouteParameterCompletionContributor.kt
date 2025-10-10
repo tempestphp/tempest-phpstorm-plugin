@@ -51,7 +51,7 @@ class RouteParameterCompletionContributor : CompletionContributor() {
                     if (firstParameter == element) return
 
                     RouteResolveUtils
-                        .resolve(firstParameter)
+                        .resolveCached(firstParameter)
                         .flatMap { RouteLookupElementBuilder.create(it) }
                         .apply { result.addAllElements(this) }
                         .apply { if (isNotEmpty()) result.stopHere() }

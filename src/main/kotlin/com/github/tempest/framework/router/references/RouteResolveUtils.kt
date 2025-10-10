@@ -4,12 +4,22 @@ import com.github.tempest.framework.TempestFrameworkClasses
 import com.github.tempest.framework.router.index.Route
 import com.github.tempest.framework.router.index.RouterIndexUtils
 import com.intellij.psi.PsiElement
+import com.intellij.psi.util.CachedValueProvider
+import com.intellij.psi.util.CachedValuesManager
 import com.jetbrains.php.lang.PhpReferenceContributor
 import com.jetbrains.php.lang.psi.elements.ArrayCreationExpression
 import com.jetbrains.php.lang.psi.elements.Method
 import com.jetbrains.php.lang.psi.elements.StringLiteralExpression
 
 object RouteResolveUtils {
+    fun resolveCached(firstParameter: PsiElement): Collection<Route> =
+        CachedValuesManager.getCachedValue(firstParameter) {
+            CachedValueProvider.Result.create(
+                resolve(firstParameter),
+                firstParameter.containingFile,
+            )
+        }
+
     fun resolve(firstParameter: PsiElement): Collection<Route> =
         when (firstParameter) {
             is ArrayCreationExpression -> fromArrayCreation(firstParameter)
