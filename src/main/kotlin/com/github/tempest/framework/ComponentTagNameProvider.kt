@@ -24,7 +24,7 @@ class ComponentTagNameProvider : XmlTagNameProvider {
 
                 true
             },
-            GlobalSearchScope.projectScope(project),
+            GlobalSearchScope.allScope(project),
             null,
         )
 

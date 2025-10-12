@@ -34,23 +34,31 @@ class ComponentReferenceContributor : PsiReferenceContributor() {
 
                     val project = element.project
 
-                    val result = mutableListOf<PsiReference>()
                     val filename = element.name + TempestFrameworkUtil.TEMPLATE_SUFFIX
 //                    println("looking for $filename")
 
+                    val resultProject = mutableListOf<PsiReference>()
+                    val resultOther = mutableListOf<PsiReference>()
+
+                    val allScope = GlobalSearchScope.allScope(project)
+                    val projectScope = GlobalSearchScope.projectScope(project)
                     FilenameIndex.processFilesByName(
                         filename,
                         true,
-                        GlobalSearchScope.projectScope(project),
+                        allScope,
                         {
                             val psiFile = it.findPsiFile(project) ?: return@processFilesByName true
+                            if (projectScope.contains(it)) {
+                                resultProject.add(PsiReferenceBase.createSelfReference(element, range, psiFile))
+                            } else {
 //                            println("found file $it for ${element.name}, range ${range}")
-                            result.add(PsiReferenceBase.createSelfReference(element, range, psiFile))
+                                resultOther.add(PsiReferenceBase.createSelfReference(element, range, psiFile))
+                            }
 
                             true
                         })
 
-                    return result.toTypedArray()
+                    return listOf(resultProject, resultOther).flatten().toTypedArray()
 //                        .apply { println("found references for ${element.name} ${this.joinToString { it.toString() }}") }
                 }
 
