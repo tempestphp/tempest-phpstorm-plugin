@@ -6,5 +6,17 @@
         <classMethod class="\Tempest\Database\IsDatabaseModel" method="create" argument="0">
             <properties xpath="$variable"/>
         </classMethod>
+        <classMethod class="\Tempest\Database\IsDatabaseModel" method="findOrNew" argument="0" targetInArray="key">
+            <properties xpath="$variable"/>
+        </classMethod>
+        <classMethod class="\Tempest\Database\IsDatabaseModel" method="findOrNew" argument="1" targetInArray="key">
+            <properties xpath="$variable"/>
+        </classMethod>
+        <classMethod class="\Tempest\Database\IsDatabaseModel" method="updateOrCreate" argument="0" targetInArray="key">
+            <properties xpath="$variable"/>
+        </classMethod>
+        <classMethod class="\Tempest\Database\IsDatabaseModel" method="updateOrCreate" argument="1" targetInArray="key">
+            <properties xpath="$variable"/>
+        </classMethod>
     </definitions>
 </meta-storm>
