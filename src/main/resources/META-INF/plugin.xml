@@ -44,6 +44,12 @@
         <completion.contributor
                 language="PHP"
                 implementationClass="com.github.tempest.framework.router.completion.RouteParameterCompletionContributor"/>
+        <completion.contributor
+                language="PHP"
+                implementationClass="com.github.tempest.framework.container.completion.ContainerCompletionContributor"/>
+        <psi.referenceContributor
+                language="PHP"
+                implementation="com.github.tempest.framework.container.references.ContainerReferenceContributor"/>
         <weigher
                 order="first"
                 implementationClass="com.github.tempest.framework.common.completion.CompletionWeighter"
