@@ -14,11 +14,11 @@
                 implementation="com.github.tempest.framework.console.run.TempestConsoleCommandRunConfigurationType"/>
         <runLineMarkerContributor
                 language="PHP"
-                implementationClass="com.github.tempest.framework.console.run.ConsoleCommandLineMarkerProvider" />
+                implementationClass="com.github.tempest.framework.console.run.ConsoleCommandLineMarkerProvider"/>
         <runConfigurationProducer
-                implementation="com.github.tempest.framework.console.run.TempestRunConfigurationProducer" />
+                implementation="com.github.tempest.framework.console.run.TempestRunConfigurationProducer"/>
         <runAnything.executionProvider
-                implementation="com.github.tempest.framework.console.run.TempestRunAnythingProvider" />
+                implementation="com.github.tempest.framework.console.run.TempestRunAnythingProvider"/>
         <multiHostInjector
                 implementation="com.github.tempest.framework.views.injection.PHPLanguageInjector"/>
         <webSymbols.webTypes
@@ -53,13 +53,13 @@
         <weigher
                 order="first"
                 implementationClass="com.github.tempest.framework.common.completion.CompletionWeighter"
-                key="completion" />
-
+                key="completion"/>
         <fileBasedIndex
-                implementation="com.github.tempest.framework.console.index.ConsoleCommandsIndex" />
+                implementation="com.github.tempest.framework.console.index.ConsoleCommandsIndex"/>
         <fileBasedIndex
-                implementation="com.github.tempest.framework.router.index.RoutesListIndex" />
+                implementation="com.github.tempest.framework.router.index.RoutesListIndex"/>
     </extensions>
     <extensions defaultExtensionNs="com.jetbrains.php">
+        <libraryRoot id="tempest.meta-storm" path="meta-storm" runtime="false" />
     </extensions>
 </idea-plugin>

@@ -1,0 +1,10 @@
+<meta-storm xmlns="meta-storm">
+    <definitions>
+        <function name="\Tempest\view" argument="0">
+            <files xpath="$directory"/>
+        </function>
+        <classMethod class="\Tempest\Database\IsDatabaseModel" method="create" argument="0">
+            <properties xpath="$variable"/>
+        </classMethod>
+    </definitions>
+</meta-storm>
