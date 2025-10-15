@@ -58,6 +58,10 @@
                 implementation="com.github.tempest.framework.console.index.ConsoleCommandsIndex"/>
         <fileBasedIndex
                 implementation="com.github.tempest.framework.router.index.RoutesListIndex"/>
+
+        <psi.referenceContributor
+                language="PHP"
+                implementation="com.github.tempest.framework.db.references.QueryBuilderReferenceContributor"/>
     </extensions>
     <extensions defaultExtensionNs="com.jetbrains.php">
         <libraryRoot id="tempest.meta-storm" path="meta-storm" runtime="false" />
