@@ -59,6 +59,11 @@
         <fileBasedIndex
                 implementation="com.github.tempest.framework.router.index.RoutesListIndex"/>
 
+        <directoryProjectGenerator
+                implementation="com.github.tempest.framework.scaffolder.project.TempestProjectGenerator" />
+        <moduleBuilder
+                builderClass="com.github.tempest.framework.scaffolder.project.TempestModuleBuilder" />
+
         <psi.referenceContributor
                 language="PHP"
                 implementation="com.github.tempest.framework.db.references.QueryBuilderReferenceContributor"/>
