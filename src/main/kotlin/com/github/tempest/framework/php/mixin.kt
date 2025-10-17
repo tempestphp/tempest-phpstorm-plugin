@@ -6,6 +6,7 @@ import com.intellij.psi.util.PsiTreeUtil
 import com.jetbrains.php.PhpIndex
 import com.jetbrains.php.lang.psi.PhpFile
 import com.jetbrains.php.lang.psi.elements.Method
+import com.jetbrains.php.lang.psi.elements.PhpClass
 import com.jetbrains.php.lang.psi.elements.Variable
 
 fun PhpFile.getPhpViewVariables(): Set<Variable> {
@@ -17,14 +18,19 @@ fun PhpFile.getPhpViewVariables(): Set<Variable> {
 }
 
 fun Method.getConsoleCommandName(): String? {
-    return this
-        .getAttributes(TempestFrameworkClasses.ConsoleCommand)
+    return getAttributes(TempestFrameworkClasses.ConsoleCommand)
+        .apply { if (this.isEmpty()) return null }
         .firstOrNull()
         ?.arguments
         ?.run { this.find { it.name == "name" } ?: firstOrNull() }
         ?.argument
         ?.value
         ?.run { StringUtil.unquoteString(this) }
+        ?: "${containingClass?.getConsoleCommandNamePrefix()}:${name}"
+}
+
+fun PhpClass.getConsoleCommandNamePrefix(): String {
+    return name.substringBefore("Command").lowercase()
 }
 
 fun PhpIndex.getMethodsByFQN(fqn:String): Collection<Method> {

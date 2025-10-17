@@ -14,7 +14,7 @@ class TempestRunConfigurationProducer : LazyRunConfigurationProducer<TempestCons
         context: ConfigurationContext,
         sourceElement: Ref<PsiElement>
     ): Boolean {
-        val element = context.psiLocation as? Method ?: return false
+        val element = context.psiLocation?.parent as? Method ?: return false
         val commandName = element.getConsoleCommandName() ?: return false
 
         configuration.settings.commandName = commandName
@@ -25,9 +25,9 @@ class TempestRunConfigurationProducer : LazyRunConfigurationProducer<TempestCons
 
     override fun isConfigurationFromContext(
         configuration: TempestConsoleCommandRunConfiguration,
-        context: ConfigurationContext
+        context: ConfigurationContext,
     ): Boolean {
-        val method = context.psiLocation as? Method ?: return false
+        val method = context.psiLocation?.parent as? Method ?: return false
 
         return configuration.settings.commandName == method.getConsoleCommandName()
     }

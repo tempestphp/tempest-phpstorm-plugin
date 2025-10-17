@@ -11,9 +11,10 @@ import com.jetbrains.php.lang.psi.elements.Method
 
 class ConsoleCommandLineMarkerProvider : RunLineMarkerContributor() {
     override fun getInfo(element: PsiElement) = when {
-        element !is Method -> null
+        element.parent !is Method -> null
+        (element.parent as? Method)?.nameIdentifier != element -> null
         else -> {
-            val commandName = element.getConsoleCommandName() ?: return null
+            val commandName = (element.parent as? Method)?.getConsoleCommandName() ?: return null
             Info(
                 AllIcons.Actions.Execute,
                 ExecutorAction.getActions(1),
