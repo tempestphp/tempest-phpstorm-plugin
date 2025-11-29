@@ -17,15 +17,34 @@ class TemplateBracketTypedHandler : TypedHandlerDelegate() {
         val offset = editor.caretModel.offset
         val text = editor.document.charsSequence
 
-        if (c == ' ') {
-            return handleAutoComplete(project, editor, text, offset)
+        if (c == '{' || c == '!' || c == '-') {
+            val result = handleAutoComplete(project, editor, text, offset)
+            if (result == Result.STOP) return result
         }
 
         if (c == '!' || c == '-') {
             synchronizeBrackets(project, editor, text, offset)
         }
 
+        if (c == ' ') {
+            handleSpaceInBrackets(project, editor, text, offset)
+        }
+
         return Result.CONTINUE
+    }
+
+    private fun handleSpaceInBrackets(project: Project, editor: Editor, text: CharSequence, offset: Int) {
+        val textBefore = text.subSequence(0, offset).toString()
+        val textAfter = text.subSequence(offset, text.length).toString()
+
+        for (pair in BRACKET_PAIRS) {
+            if (textBefore.endsWith(pair.opening + " ") && textAfter.startsWith(pair.closing)) {
+                WriteCommandAction.runWriteCommandAction(project) {
+                    editor.document.insertString(offset, " ")
+                }
+                return
+            }
+        }
     }
 
     private fun handleAutoComplete(project: Project, editor: Editor, text: CharSequence, offset: Int): Result {
@@ -34,8 +53,8 @@ class TemplateBracketTypedHandler : TypedHandlerDelegate() {
         val textBefore = text.subSequence(0, offset).toString()
 
         for (pair in AUTO_COMPLETE_PAIRS) {
-            if (textBefore.endsWith(pair.opening + " ")) {
-                if (!hasClosingBracketAhead(text, offset, pair.closing.trim())) {
+            if (textBefore.endsWith(pair.opening)) {
+                if (!hasAnyClosingBracketAhead(text, offset)) {
                     insertClosingBracket(project, editor, offset, pair.closing)
                     return Result.STOP
                 }
@@ -97,16 +116,20 @@ class TemplateBracketTypedHandler : TypedHandlerDelegate() {
         return if (nextOpenIndex == -1) closingIndex else -1
     }
 
-    private fun hasClosingBracketAhead(text: CharSequence, offset: Int, closing: String): Boolean {
+    private fun hasAnyClosingBracketAhead(text: CharSequence, offset: Int): Boolean {
         val textAfter = text.subSequence(offset, text.length).toString()
 
-        val nextClose = textAfter.indexOf(closing)
-        if (nextClose == -1) return false
+        for (pair in BRACKET_PAIRS) {
+            val nextClose = textAfter.indexOf(pair.closing)
+            if (nextClose != -1) {
+                val nextOpen = textAfter.indexOf(pair.opening)
+                if (nextOpen == -1 || nextClose < nextOpen) {
+                    return true
+                }
+            }
+        }
 
-        val opening = BRACKET_PAIRS.find { it.closing == closing }?.opening ?: return false
-        val nextOpen = textAfter.indexOf(opening)
-
-        return nextOpen == -1 || nextClose < nextOpen
+        return false
     }
 
     private fun insertClosingBracket(project: Project, editor: Editor, offset: Int, closing: String) {
@@ -129,9 +152,9 @@ val BRACKET_PAIRS = listOf(
 )
 
 private val AUTO_COMPLETE_PAIRS = listOf(
-    TemplateBracketTypedHandler.BracketPair("{{--", " --}}"),
-    TemplateBracketTypedHandler.BracketPair("{{!!", " !!}}"),
-    TemplateBracketTypedHandler.BracketPair("{{", " }}"),
+    TemplateBracketTypedHandler.BracketPair("{{--", "--}}"),
+    TemplateBracketTypedHandler.BracketPair("{{!!", "!!}}"),
+    TemplateBracketTypedHandler.BracketPair("{{", "}}"),
 )
 
 val INSTANCE = TemplateBracketTypedHandler()
