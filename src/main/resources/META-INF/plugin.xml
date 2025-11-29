@@ -24,6 +24,9 @@
         <webSymbols.webTypes
                 source="META-INF/webTypes.json"
                 enableByDefault="true"/>
+        <polySymbols.webTypes
+                source="META-INF/webTypes.json"
+                enableByDefault="true"/>
         <xml.tagNameProvider
                 implementation="com.github.tempest.framework.ComponentTagNameProvider"/>
         <psi.referenceContributor
