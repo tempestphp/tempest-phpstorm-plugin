@@ -75,6 +75,10 @@ class ComponentReferenceContributor : PsiReferenceContributor() {
                     val attribute = element as? XmlAttribute ?: return emptyArray()
                     val htmlTag = attribute.parent as? HtmlTag ?: return emptyArray()
 
+                    if (attribute.name in TempestFrameworkUtil.BUILT_IN_DIRECTIVE_ATTRIBUTES) {
+                        return emptyArray()
+                    }
+
                     return arrayOf(TempestAttributeReference(element, htmlTag))
 //                        .apply { println("found references for ${element} ${this.joinToString { it.toString() }}") }
                 }

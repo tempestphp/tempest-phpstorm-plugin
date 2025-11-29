@@ -3,7 +3,7 @@
   "name": "Tempest",
   "version": "1.0.0",
   "description-markup": "markdown",
-  "default-icon": "icon",
+  "default-icon": "icons/tempest/icon.svg",
   "contributions": {
     "html": {
       "elements": [
