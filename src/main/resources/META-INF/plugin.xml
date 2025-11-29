@@ -67,6 +67,8 @@
         <psi.referenceContributor
                 language="PHP"
                 implementation="com.github.tempest.framework.db.references.QueryBuilderReferenceContributor"/>
+        <typedHandler
+                implementation="com.github.tempest.framework.views.completion.ViewVariableTypedHandler"/>
     </extensions>
     <extensions defaultExtensionNs="com.jetbrains.php">
         <libraryRoot id="tempest.meta-storm" path="meta-storm" runtime="false" />
