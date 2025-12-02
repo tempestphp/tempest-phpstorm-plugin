@@ -7,15 +7,18 @@ import com.intellij.psi.PsiFile
 
 class TemplateBracketBackspaceHandler : BackspaceHandlerDelegate() {
 
-    override fun beforeCharDeleted(c: Char, file: PsiFile, editor: Editor) {}
+    override fun beforeCharDeleted(c: Char, file: PsiFile, editor: Editor) = Unit
 
     override fun charDeleted(c: Char, file: PsiFile, editor: Editor): Boolean {
-        if (!file.name.endsWith(TempestFrameworkUtil.TEMPLATE_SUFFIX)) return false
+        if (!file.name.endsWith(TempestFrameworkUtil.TEMPLATE_SUFFIX) || c !in SPECIAL_CHARS) {
+            return false
+        }
 
-        if (c != '!' && c != '-') return false
-
-        TemplateBracketTypedHandler.INSTANCE.synchronizeBracketsAfterDeletion(file.project, editor)
-
+        TemplateBracketTypedHandler.INSTANCE.synchronizeBracketsAfterDeletion(file.project, editor, c)
         return false
+    }
+
+    private companion object {
+        val SPECIAL_CHARS = setOf('!', '-')
     }
 }
