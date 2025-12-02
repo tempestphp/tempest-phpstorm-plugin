@@ -9,37 +9,47 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiLanguageInjectionHost
 import com.intellij.psi.html.HtmlTag
 import com.intellij.psi.impl.source.html.HtmlRawTextImpl
+import com.intellij.psi.impl.source.xml.XmlAttributeValueImpl
+import com.intellij.psi.impl.source.xml.XmlTextImpl
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.xml.XmlAttribute
-import com.intellij.psi.xml.XmlAttributeValue
-import com.intellij.psi.xml.XmlText
 import com.intellij.psi.xml.XmlToken
 import com.jetbrains.php.lang.PhpLanguage
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocComment
 
 class PHPLanguageInjector : MultiHostInjector {
-    private val templateTags = mapOf(
-        "{!!" to "!!}",
-        "{{" to "}}",
+    companion object {
+        private val templateTags = mapOf(
+            "{!!" to "!!}",
+            "{{" to "}}",
+        )
+    }
+
+    override fun elementsToInjectIn() = listOf(
+        XmlAttributeValueImpl::class.java,
+        XmlTextImpl::class.java,
+        HtmlTag::class.java,
     )
 
     override fun getLanguagesToInject(registrar: MultiHostRegistrar, element: PsiElement) {
+        val file = element.containingFile ?: return
+        if (!file.name.endsWith(TempestFrameworkUtil.TEMPLATE_SUFFIX)) return
+
         when (element) {
-            is XmlAttributeValue -> injectIntoAttribute(element, registrar)
+            is XmlAttributeValueImpl -> injectIntoAttribute(element, registrar)
+            is XmlTextImpl -> injectIntoText(element, registrar)
             is HtmlTag -> injectIntoHtmlTag(element, registrar)
-            is XmlText -> (element as? PsiLanguageInjectionHost)?.let { injectIntoText(it, registrar) }
         }
     }
 
-    private fun injectIntoAttribute(element: XmlAttributeValue, registrar: MultiHostRegistrar) {
+    private fun injectIntoAttribute(element: XmlAttributeValueImpl, registrar: MultiHostRegistrar) {
         val attribute = element.parent as? XmlAttribute ?: return
         if (!attribute.name.startsWith(':')) return
 
-        val host = element as? PsiLanguageInjectionHost ?: return
-
+        val variableDeclarations = collectVariableDeclarations(element)
         registrar
             .startInjecting(PhpLanguage.INSTANCE)
-            .addPlace(getVarDeclarationsPrefix(element), "?>", host, TextRange(0, host.textLength))
+            .addPlace("$variableDeclarations<?=", "?>", element, element.textRange.shiftLeft(element.startOffset))
             .doneInjecting()
     }
 
@@ -59,31 +69,23 @@ class PHPLanguageInjector : MultiHostInjector {
         val closeTag = tokens.find { it.text == templateTags[openTag.text] }?.psi ?: return
         val range = TextRange(openTag.textRangeInParent.endOffset, closeTag.startOffsetInParent)
 
+        val variableDeclarations = collectVariableDeclarations(element)
+
         registrar
             .startInjecting(PhpLanguage.INSTANCE)
-            .addPlace(getVarDeclarationsPrefix(element), "?>", element, range)
+            .addPlace("$variableDeclarations<?=", "?>", element, range)
             .doneInjecting()
     }
 
-    override fun elementsToInjectIn() = listOf(
-        XmlAttributeValue::class.java,
-        XmlText::class.java,
-        HtmlTag::class.java,
-    )
-
-    private fun getVarDeclarationsPrefix(element: PsiElement): String {
-        val file = element.containingFile ?: return DEFAULT_PREFIX
-        if (!file.name.endsWith(TempestFrameworkUtil.TEMPLATE_SUFFIX)) return DEFAULT_PREFIX
+    private fun collectVariableDeclarations(element: PsiElement): String? {
+        val file = element.containingFile ?: return null
 
         val searchFile = file.viewProvider.getPsi(PhpLanguage.INSTANCE) ?: file
-        val varDeclarations = PsiTreeUtil.findChildrenOfType(searchFile, PhpDocComment::class.java)
+        val variableDeclarations = PsiTreeUtil.findChildrenOfType(searchFile, PhpDocComment::class.java)
             .filter { "@var" in it.text }
-            .joinToString(" ") { it.text }
+            .joinToString("\n") { it.text }
+            .ifEmpty { return null }
 
-        return if (varDeclarations.isEmpty()) DEFAULT_PREFIX else "<?php $varDeclarations ?>$DEFAULT_PREFIX"
-    }
-
-    companion object {
-        private const val DEFAULT_PREFIX = "<?="
+        return "<?php $variableDeclarations ?>"
     }
 }
