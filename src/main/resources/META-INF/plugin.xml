@@ -71,6 +71,8 @@
                 language="PHP"
                 implementation="com.github.tempest.framework.db.references.QueryBuilderReferenceContributor"/>
         <typedHandler
+                implementation="com.github.tempest.framework.views.completion.ViewVariableTypedHandler"/>
+        <typedHandler
                 implementation="com.github.tempest.framework.views.completion.TemplateBracketTypedHandler"/>
         <backspaceHandlerDelegate
                 implementation="com.github.tempest.framework.views.completion.TemplateBracketBackspaceHandler"/>
