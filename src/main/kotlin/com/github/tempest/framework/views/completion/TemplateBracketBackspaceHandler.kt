@@ -14,7 +14,7 @@ class TemplateBracketBackspaceHandler : BackspaceHandlerDelegate() {
 
         if (c != '!' && c != '-') return false
 
-        INSTANCE.synchronizeBracketsAfterDeletion(file.project, editor)
+        TemplateBracketTypedHandler.INSTANCE.synchronizeBracketsAfterDeletion(file.project, editor)
 
         return false
     }

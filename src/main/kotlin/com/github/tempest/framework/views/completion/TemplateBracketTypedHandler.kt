@@ -143,6 +143,10 @@ class TemplateBracketTypedHandler : TypedHandlerDelegate() {
             editor.document.replaceString(start, start + length, newText)
         }
     }
+
+    companion object {
+        val INSTANCE = TemplateBracketTypedHandler()
+    }
 }
 
 val BRACKET_PAIRS = listOf(
@@ -156,5 +160,3 @@ private val AUTO_COMPLETE_PAIRS = listOf(
     TemplateBracketTypedHandler.BracketPair("{{!!", "!!}}"),
     TemplateBracketTypedHandler.BracketPair("{{", "}}"),
 )
-
-val INSTANCE = TemplateBracketTypedHandler()
